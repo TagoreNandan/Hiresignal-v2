@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HireSignal | Market Intelligence Terminal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface-variant": "#ccc3d8",
+                      "on-secondary": "#313030",
+                      "primary": "#d2bbff",
+                      "secondary-fixed": "#e5e2e1",
+                      "background": "#131313",
+                      "on-primary-fixed": "#25005a",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container": "#1f2020",
+                      "tertiary-container": "#656767",
+                      "on-primary-container": "#ede0ff",
+                      "surface": "#131313",
+                      "on-secondary-fixed-variant": "#474646",
+                      "surface-bright": "#393939",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-surface": "#e4e2e1",
+                      "error-container": "#93000a",
+                      "on-background": "#e4e2e1",
+                      "surface-container-high": "#2a2a2a",
+                      "primary-fixed": "#eaddff",
+                      "secondary-container": "#4a4949",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "outline-variant": "#4a4455",
+                      "on-tertiary-container": "#e6e6e6",
+                      "surface-container-highest": "#353535",
+                      "inverse-on-surface": "#303030",
+                      "secondary": "#c8c6c5",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-dim": "#131313",
+                      "tertiary-fixed": "#e2e2e2",
+                      "primary-fixed-dim": "#d2bbff",
+                      "outline": "#958da1",
+                      "on-secondary-container": "#bab8b7",
+                      "surface-container-low": "#1b1c1c",
+                      "surface-tint": "#d2bbff",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "on-tertiary": "#2f3131",
+                      "inverse-primary": "#732ee4",
+                      "on-error-container": "#ffdad6",
+                      "inverse-surface": "#e4e2e1",
+                      "error": "#ffb4ab",
+                      "surface-variant": "#353535",
+                      "primary-container": "#7c3aed",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "tertiary": "#c6c6c7",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-primary": "#3f008e",
+                      "on-error": "#690005"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin": "40px",
+                      "container-max": "1440px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "data-mono": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Playfair Display"],
+                      "label-md": ["Inter"],
+                      "headline-lg": ["Playfair Display"],
+                      "display-lg": ["Playfair Display"],
+                      "body-md": ["Inter"],
+                      "headline-md": ["Playfair Display"]
+              },
+              "fontSize": {
+                      "data-mono": ["13px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e4e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .technical-grid {
+            background-image: linear-gradient(#1f2020 1px, transparent 1px), linear-gradient(90deg, #1f2020 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #131313;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4a4455;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+        .chart-container {
+            position: relative;
+            height: 240px;
+            width: 100%;
+        }
+        .status-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="dark selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant dark:border-outline-variant sticky top-0 z-50">
+<nav class="flex justify-between items-center w-full px-margin py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-12">
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-background dark:text-on-background uppercase">SIGINT NETWORK</span>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-primary-container dark:text-primary border-b border-primary-container dark:border-primary pb-unit hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Intelligence</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Network</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Archive</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Briefings</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container border border-outline-variant px-4 py-1.5 gap-3">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-data-mono font-data-mono text-on-surface placeholder:text-on-tertiary-fixed-variant p-0 w-48" placeholder="QUERY DATABASE..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">dark_mode</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">account_circle</button>
+<div class="md:hidden">
+<button class="material-symbols-outlined text-on-surface">menu</button>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<main class="max-w-container-max mx-auto px-margin py-10 technical-grid min-h-screen">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 bg-primary rounded-full status-pulse"></span>
+<span class="font-data-mono text-data-mono text-primary uppercase tracking-[0.2em]">Live Market Terminal</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface">Market Intelligence</h1>
+</div>
+<div class="flex gap-unit bg-surface-container p-unit border border-outline-variant">
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-2 uppercase tracking-wider">Predictive</button>
+<button class="text-on-surface-variant font-label-md text-label-md px-6 py-2 uppercase tracking-wider hover:bg-surface-container-high transition-colors">Historical</button>
+</div>
+</div>
+<!-- Hero Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-gutter">
+<div class="bg-surface border border-outline-variant p-6 bg-gradient-to-br from-surface to-surface-container-low">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Pipeline Value</span>
+<span class="material-symbols-outlined text-primary text-[20px]">payments</span>
+</div>
+<div class="font-display-lg text-display-lg text-on-surface">$2.4M</div>
+<div class="mt-2 flex items-center gap-2">
+<span class="text-primary font-data-mono text-data-mono">Target Reached</span>
+</div>
+</div>
+</div>
+<!-- Main Visualizations -->
+<div class="grid grid-cols-1 gap-gutter mb-gutter">
+<!-- Signal Velocity -->
+<!-- Industry Heatmap -->
+<div class="bg-surface border border-outline-variant flex flex-col">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="font-headline-md text-headline-md">Sectors Heatmap</h3>
+</div>
+<div class="p-6 flex flex-col gap-4 flex-grow overflow-y-auto custom-scrollbar">
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md uppercase">Generative AI</span>
+<span class="font-data-mono text-data-mono text-primary">+84%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant overflow-hidden">
+<div class="h-full bg-primary-container w-[84%] transition-all group-hover:bg-primary"></div>
+</div>
+</div>
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md uppercase">Fintech / DeFi</span>
+<span class="font-data-mono text-data-mono text-primary">+42%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant overflow-hidden">
+<div class="h-full bg-primary-container w-[42%] transition-all group-hover:bg-primary"></div>
+</div>
+</div>
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md uppercase">Cybersecurity</span>
+<span class="font-data-mono text-data-mono text-primary">+38%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant overflow-hidden">
+<div class="h-full bg-primary-container w-[38%] transition-all group-hover:bg-primary"></div>
+</div>
+</div>
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md uppercase">Energy / Grid</span>
+<span class="font-data-mono text-data-mono text-primary">+21%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant overflow-hidden">
+<div class="h-full bg-primary-container w-[21%] transition-all group-hover:bg-primary"></div>
+</div>
+</div>
+<div class="group cursor-pointer">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md uppercase">HealthTech</span>
+<span class="font-data-mono text-data-mono text-primary">+12%</span>
+</div>
+<div class="w-full h-2 bg-surface-container border border-outline-variant overflow-hidden">
+<div class="h-full bg-primary-container w-[12%] transition-all group-hover:bg-primary"></div>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant bg-surface-container-low">
+<button class="w-full text-center font-label-md text-label-md text-primary uppercase tracking-widest hover:underline">Full Sector Audit</button>
+</div>
+</div>
+</div>
+<!-- Emerging Signals List -->
+<div class="bg-surface border border-outline-variant mb-gutter overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">Emerging Job Anomalies</h3>
+<div class="flex gap-2">
+<button class="material-symbols-outlined p-2 border border-outline-variant hover:bg-surface-container transition-colors">filter_list</button>
+<button class="material-symbols-outlined p-2 border border-outline-variant hover:bg-surface-container transition-colors">download</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="text-left py-4 px-6 font-label-md text-label-md text-on-surface-variant uppercase">Signal ID</th>
+<th class="text-left py-4 px-6 font-label-md text-label-md text-on-surface-variant uppercase">Position Entity</th>
+<th class="text-left py-4 px-6 font-label-md text-label-md text-on-surface-variant uppercase">Source Origin</th>
+<th class="text-left py-4 px-6 font-label-md text-label-md text-on-surface-variant uppercase">Match Score</th>
+<th class="text-left py-4 px-6 font-label-md text-label-md text-on-surface-variant uppercase">Status</th>
+<th class="text-right py-4 px-6 font-label-md text-label-md text-on-surface-variant uppercase">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-tertiary-fixed-variant">SIG-9921</td>
+<td class="py-4 px-6">
+<div class="font-body-md text-body-md font-bold text-on-surface">Stealth Startup #04</div>
+<div class="font-data-mono text-[11px] text-on-tertiary-fixed-variant">VP Engineering • Palo Alto</div>
+</td>
+<td class="py-4 px-6">
+<span class="bg-surface-container border border-outline-variant px-2 py-1 font-data-mono text-[11px] text-on-surface uppercase">Private Network</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-primary">98.2</span>
+<div class="w-16 h-1 bg-surface-container">
+<div class="h-full bg-primary w-[98%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="flex items-center gap-2 font-data-mono text-data-mono text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> ACTIVE
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">open_in_new</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-tertiary-fixed-variant">SIG-8842</td>
+<td class="py-4 px-6">
+<div class="font-body-md text-body-md font-bold text-on-surface">Neural Systems Inc.</div>
+<div class="font-data-mono text-[11px] text-on-tertiary-fixed-variant">Lead AI Scientist • London</div>
+</td>
+<td class="py-4 px-6">
+<span class="bg-surface-container border border-outline-variant px-2 py-1 font-data-mono text-[11px] text-on-surface uppercase">Scraped Alert</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-primary">91.5</span>
+<div class="w-16 h-1 bg-surface-container">
+<div class="h-full bg-primary w-[91%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="flex items-center gap-2 font-data-mono text-data-mono text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-fixed-variant"></span> PENDING
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">open_in_new</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-tertiary-fixed-variant">SIG-7719</td>
+<td class="py-4 px-6">
+<div class="font-body-md text-body-md font-bold text-on-surface">Quantum Logistics</div>
+<div class="font-data-mono text-[11px] text-on-tertiary-fixed-variant">Head of Product • Berlin</div>
+</td>
+<td class="py-4 px-6">
+<span class="bg-surface-container border border-outline-variant px-2 py-1 font-data-mono text-[11px] text-on-surface uppercase">Dark Social</span>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-primary">87.0</span>
+<div class="w-16 h-1 bg-surface-container">
+<div class="h-full bg-primary w-[87%]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="flex items-center gap-2 font-data-mono text-data-mono text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> ACTIVE
+                                </span>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">open_in_new</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Intelligence Briefing -->
+</main>
+<footer class="bg-background dark:bg-background border-t border-outline-variant dark:border-outline-variant mt-20">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin py-8 max-w-container-max mx-auto">
+<span class="font-data-mono text-data-mono font-bold text-on-surface uppercase mb-4 md:mb-0">SIGNAL INTELLIGENCE</span>
+<div class="flex flex-wrap justify-center gap-8 mb-4 md:mb-0">
+<a class="font-label-md text-label-md text-tertiary dark:text-tertiary-fixed-dim hover:text-primary-container dark:hover:text-primary transition-colors" href="#">Security Protocol</a>
+<a class="font-label-md text-label-md text-tertiary dark:text-tertiary-fixed-dim hover:text-primary-container dark:hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-tertiary dark:text-tertiary-fixed-dim hover:text-primary-container dark:hover:text-primary transition-colors" href="#">Data Access</a>
+<a class="font-label-md text-label-md text-tertiary dark:text-tertiary-fixed-dim hover:text-primary-container dark:hover:text-primary transition-colors" href="#">Terminal Support</a>
+</div>
+<span class="font-label-md text-label-md text-on-tertiary-fixed-variant uppercase">© 2024 HIRESIGNAL. ALL RIGHTS RESERVED.</span>
+</div>
+</footer>
+<script>
+        // Micro-interactions and subtle effects
+        document.querySelectorAll('.bg-surface').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = '#7C3AED';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = '#4a4455';
+            });
+        });
+
+        // Simulating live data updates
+        setInterval(() => {
+            const confidenceValue = document.querySelector('.font-display-lg:nth-child(2)');
+            if(confidenceValue && confidenceValue.innerText.includes('%')) {
+                const current = parseFloat(confidenceValue.innerText);
+                const shift = (Math.random() * 0.2 - 0.1).toFixed(1);
+                const newVal = (current + parseFloat(shift)).toFixed(1);
+                // confidenceValue.innerText = newVal + '%'; // Only visual simulation
+            }
+        }, 5000);
+    </script>
+</body></html>
