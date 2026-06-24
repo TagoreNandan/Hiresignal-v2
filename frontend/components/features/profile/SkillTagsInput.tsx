@@ -7,46 +7,69 @@ interface SkillTagsInputProps {
 }
 
 export function SkillTagsInput({ value, onChange }: SkillTagsInputProps) {
-  const [inputValue, setInputValue] = useState('');
+  const [isAddingSkill, setIsAddingSkill] = useState<boolean>(false);
+  const [newSkillText, setNewSkillText] = useState<string>('');
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault();
-      const newSkill = inputValue.trim();
-      if (newSkill && !value.includes(newSkill)) {
-        onChange([...value, newSkill]);
-      }
-      setInputValue('');
+  const handleAddSkill = () => {
+    const trimmed = newSkillText.trim();
+    if (trimmed && !value.includes(trimmed)) {
+      onChange([...value, trimmed]);
     }
+    setNewSkillText('');
+    setIsAddingSkill(false);
   };
 
-  const removeSkill = (skillToRemove: string) => {
-    onChange(value.filter((skill) => skill !== skillToRemove));
+  const handleRemoveSkill = (skillToRemove: string) => {
+    onChange(value.filter((s) => s !== skillToRemove));
   };
 
   return (
-    <div>
-      <label htmlFor="skills" className="block text-sm font-medium text-on-surface-variant">
-        Skills
+    <div className="space-y-4">
+      <label className="font-label-md text-label-md text-on-surface uppercase block tracking-wider">
+        Core Competencies
       </label>
-      <div className="mt-1 flex flex-wrap items-center gap-2 p-2 bg-surface-container border border-outline-variant">
+      <div className="flex flex-wrap gap-2">
         {value.map((skill) => (
-          <span key={skill} className="flex items-center gap-1 bg-primary-container text-on-primary-container text-sm px-2 py-1">
+          <div
+            key={skill}
+            className="px-3 py-1 border border-primary-container bg-primary-container/10 text-primary font-data-mono text-data-mono flex items-center gap-2 uppercase tracking-wide"
+          >
             {skill}
-            <button onClick={() => removeSkill(skill)} className="text-on-primary-container hover:text-white">
-              &times;
-            </button>
-          </span>
+            <span
+              onClick={() => handleRemoveSkill(skill)}
+              className="material-symbols-outlined text-[14px] cursor-pointer hover:text-red-400 transition-colors"
+            >
+              close
+            </span>
+          </div>
         ))}
-        <input
-          type="text"
-          id="skills"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Add a skill and press Enter"
-          className="bg-transparent border-none focus:ring-0 p-0 flex-grow"
-        />
+
+        {isAddingSkill ? (
+          <input
+            type="text"
+            value={newSkillText}
+            onChange={(e) => setNewSkillText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleAddSkill();
+              } else if (e.key === 'Escape') {
+                setIsAddingSkill(false);
+              }
+            }}
+            onBlur={handleAddSkill}
+            autoFocus
+            className="px-3 py-1 border border-primary-container bg-transparent text-on-surface font-data-mono text-data-mono w-28 focus:outline-none focus:ring-0"
+            placeholder="skill name..."
+          />
+        ) : (
+          <div
+            onClick={() => setIsAddingSkill(true)}
+            className="px-3 py-1 border border-surface-container-highest border-dashed text-surface-variant font-data-mono text-data-mono cursor-pointer hover:text-secondary hover:border-secondary transition-all uppercase tracking-wider"
+          >
+            + ADD SKILL
+          </div>
+        )}
       </div>
     </div>
   );

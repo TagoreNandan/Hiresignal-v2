@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HireSignal | Profile Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#faf9f5",
+                    "tertiary": "#446370",
+                    "on-secondary-fixed": "#2f1314",
+                    "inverse-on-surface": "#f2f1ed",
+                    "inverse-surface": "#30312e",
+                    "primary-container": "#8ba88e",
+                    "background": "#faf9f5",
+                    "surface-container-highest": "#e3e2df",
+                    "primary-fixed-dim": "#b0ceb2",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#4a654e",
+                    "primary": "#4a654e",
+                    "secondary": "#7b5455",
+                    "on-primary-fixed": "#07200f",
+                    "on-primary-container": "#233d29",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#1b3b47",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "primary-fixed": "#cceace",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e9e8e4",
+                    "surface": "#faf9f5",
+                    "on-surface": "#1b1c1a",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffdad9",
+                    "on-secondary-fixed-variant": "#603d3e",
+                    "tertiary-fixed-dim": "#abcbdb",
+                    "on-background": "#1b1c1a",
+                    "secondary-container": "#fdcbcb",
+                    "surface-variant": "#e3e2df",
+                    "on-primary-fixed-variant": "#334d38",
+                    "surface-container-low": "#f5f4f0",
+                    "outline-variant": "#c2c8c0",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#2c4b57",
+                    "inverse-primary": "#b0ceb2",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#c7e8f7",
+                    "surface-container": "#efeeea",
+                    "secondary-fixed-dim": "#ecbbba",
+                    "on-surface-variant": "#424842",
+                    "surface-dim": "#dbdad6",
+                    "on-secondary-container": "#795354"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sidebar-width": "280px",
+                    "card-padding": "32px",
+                    "container-margin": "40px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "caption": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "display": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf9f5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1b1c1a;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .profile-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="bg-surface-bright text-on-surface">
+<!-- Background Atmospheric Effect -->
+
+<!-- Side Navigation (Immutable Labels & Style from JSON) -->
+<aside class="fixed left-6 top-6 bottom-6 w-sidebar-width rounded-lg bg-white/40 backdrop-blur-[20px] border border-white/30 shadow-sm flex flex-col p-6 z-50">
+<div class="mb-10">
+<h1 class="font-headline-lg text-headline-lg text-primary">HireSignal</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">Command Center</p>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<!-- Dashboard -->
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300 rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<!-- Applications -->
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300 rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Applications</span>
+</a>
+<!-- Analytics -->
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300 rounded-DEFAULT" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<!-- Profile (ACTIVE STATE) -->
+<a class="flex items-center gap-4 bg-primary-container/30 text-on-primary-container rounded-DEFAULT p-3 font-bold hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional close-up portrait of a tech professional in a bright, modern studio. Soft daylight illuminates their face, casting gentle shadows. The aesthetic is clean, high-end, and minimalist, matching the soft sage and cream palette of a premium SaaS application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2ajDmlMDTCi-FaDzg9xOJqceDuMn-rIV7YWWc7dRm0ybyHeVObjTu--Y1tRiF7bRf6zmDkK2iAg1uV8fHkGfOBl98bx-68z0OyoJmHT96tZtKrPOYLRdkq0ZM5BRXzN1jjIGLqZ-O4n2bort709wb-PLP2cioGwuu-lbvcRIpfWFWd3XmMFtXspyyHmZqlVaG0_sP_YcTFO2GPW3My_OEnthN2SvQ0-UJGUpWQpm2XOFSjf8BZQf2d8lyXcow70979ulUJMBTHZk"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold">Alex Rivera</p>
+<p class="font-caption text-caption text-on-surface-variant">Senior Product Designer</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-6 right-6 left-[calc(280px+48px)] h-20 rounded-lg bg-white/40 backdrop-blur-[20px] border border-white/30 shadow-sm flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-4 bg-surface-container-low/50 rounded-full px-4 py-2 w-96">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-body-md text-on-surface-variant placeholder:text-outline-variant" placeholder="Search insights..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-white/30 mx-2"></div>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-full font-label-md text-label-md hover:opacity-90 transition-opacity">
+                Share Profile
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[calc(280px+48px)] mr-10 mt-32 pb-20">
+<div class="max-w-6xl mx-auto">
+<!-- Header Section -->
+<div class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="font-display text-display text-primary mb-2">My Profile</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Refine your professional identity and job preferences.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-3 glass-panel rounded-full font-label-md text-label-md hover:scale-[0.98] transition-all">Preview Public Profile</button>
+<button class="px-6 py-3 bg-secondary text-on-secondary rounded-full font-label-md text-label-md shadow-lg shadow-secondary/20 hover:scale-[0.98] transition-all">Publish Updates</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Resume Upload Area (Glassmorphic) -->
+<div class="col-span-12 lg:col-span-8 bg-white/40 backdrop-blur-[20px] rounded-lg border border-white/30 p-card-padding flex flex-col h-full shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">cloud_upload</span>
+                            Resume Upload
+                        </h3>
+<span class="font-caption text-caption text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-full">Last updated 2 days ago</span>
+</div>
+<div class="flex-grow border-2 border-dashed border-primary-container/40 rounded-lg flex flex-col items-center justify-center p-12 transition-all duration-300 hover:border-primary hover:bg-primary-container/5 group cursor-pointer relative overflow-hidden" id="dropzone">
+<div class="z-10 text-center">
+<div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl text-primary">description</span>
+</div>
+<h4 class="font-body-lg text-body-lg font-bold mb-1">Drag &amp; drop your resume here</h4>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs mx-auto">PDF, DOCX up to 10MB. Our AI will automatically parse your skills and experience.</p>
+</div>
+<!-- Decorative glow for drag zone -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+</div>
+<!-- Job Preferences (Settings) -->
+<div class="col-span-12 lg:col-span-4 bg-white/40 backdrop-blur-[20px] rounded-lg border border-white/30 p-card-padding shadow-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">tune</span>
+                        Job Preferences
+                    </h3>
+<div class="space-y-6">
+<div>
+<label class="font-label-md text-label-md text-on-surface-variant block mb-3">Employment Type</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="px-4 py-2 rounded-full border border-primary text-primary font-label-md bg-primary/5">Full-time</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-md hover:border-primary/50 transition-colors">Contract</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-md hover:border-primary/50 transition-colors">Freelance</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-md hover:border-primary/50 transition-colors">Part-time</button>
+</div>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface-variant block mb-3">Work Environment</label>
+<div class="space-y-3">
+<label class="flex items-center justify-between p-3 bg-surface-container-low/50 rounded-DEFAULT cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="font-body-md text-body-md">Remote Friendly</span>
+<input checked="" class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-3 bg-surface-container-low/50 rounded-DEFAULT cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="font-body-md text-body-md">On-site Hybrid</span>
+<input class="w-5 h-5 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+</label>
+</div>
+</div>
+<div>
+<label class="font-label-md text-label-md text-on-surface-variant block mb-3">Salary Range (Annual)</label>
+<div class="flex items-center justify-between text-on-surface font-bold mb-2">
+<span class="font-body-md">$140k</span>
+<span class="font-body-md">$220k+</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full relative">
+<div class="absolute left-[30%] right-[10%] top-0 bottom-0 bg-primary rounded-full"></div>
+<div class="absolute left-[30%] top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary rounded-full shadow-md"></div>
+<div class="absolute right-[10%] top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-2 border-primary rounded-full shadow-md"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Skills Tag Cloud -->
+<div class="col-span-12 lg:col-span-7 bg-white/40 backdrop-blur-[20px] rounded-lg border border-white/30 p-card-padding shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">psychology</span>
+                            Skills Cloud
+                        </h3>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[18px]">add</span> Add Skill
+                        </button>
+</div>
+<div class="flex flex-wrap gap-3">
+<!-- High Priority Skills -->
+<div class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            User Experience
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            Figma
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-primary-container text-on-primary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            Design Systems
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<!-- Secondary Skills -->
+<div class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            Prototyping
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            React
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            Agile
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-tertiary-container text-on-tertiary-container px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-sm border border-white/20">
+                            UI Design
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<!-- Tertiary/Soft Skills -->
+<div class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 border border-white/20">
+                            Communication
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 border border-white/20">
+                            Problem Solving
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+<div class="bg-surface-container-high text-on-surface-variant px-5 py-2 rounded-full font-label-md text-label-md flex items-center gap-2 border border-white/20">
+                            Leadership
+                            <span class="material-symbols-outlined text-[16px] cursor-pointer">close</span>
+</div>
+</div>
+</div>
+<!-- Target Roles List -->
+<div class="col-span-12 lg:col-span-5 bg-white/40 backdrop-blur-[20px] rounded-lg border border-white/30 p-card-padding shadow-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">target</span>
+                        Target Roles
+                    </h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-4 bg-white/30 rounded-lg border border-white/40 hover:bg-white/50 transition-all cursor-pointer">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">brush</span>
+</div>
+<div class="flex-grow">
+<p class="font-body-md text-body-md font-bold">Principal Designer</p>
+<p class="font-caption text-caption text-on-surface-variant">Top choice • 12+ matches today</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">drag_handle</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-white/30 rounded-lg border border-white/40 hover:bg-white/50 transition-all cursor-pointer">
+<div class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary">architecture</span>
+</div>
+<div class="flex-grow">
+<p class="font-body-md text-body-md font-bold">Product Architect</p>
+<p class="font-caption text-caption text-on-surface-variant">Growth role • 5 matches today</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">drag_handle</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-white/30 rounded-lg border border-white/40 hover:bg-white/50 transition-all cursor-pointer">
+<div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary">groups</span>
+</div>
+<div class="flex-grow">
+<p class="font-body-md text-body-md font-bold">Design Manager</p>
+<p class="font-caption text-caption text-on-surface-variant">Management • 8 matches today</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant">drag_handle</span>
+</div>
+<button class="w-full py-3 border-2 border-dashed border-outline-variant rounded-lg font-label-md text-label-md text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">
+                            + Add another target role
+                        </button>
+</div>
+</div>
+</div>
+<!-- Profile Completion Footer Card -->
+<div class="mt-gutter p-card-padding bg-primary-container/20 backdrop-blur-[10px] rounded-lg border border-primary-container/30 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="relative w-20 h-20">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-white/20" cx="40" cy="40" fill="transparent" r="36" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="40" cy="40" fill="transparent" r="36" stroke="currentColor" stroke-dasharray="226" stroke-dashoffset="45" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-bold text-lg">80%</span>
+</div>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-primary-container">Profile Strength: Strong</h4>
+<p class="font-body-md text-body-md text-on-primary-fixed-variant">Add a "Portfolio Link" to reach 100% and unlock Featured status.</p>
+</div>
+</div>
+<button class="px-8 py-3 bg-primary text-on-primary rounded-full font-label-md text-label-md shadow-lg shadow-primary/20 hover:scale-105 transition-all">Complete Profile</button>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions for Drag & Drop
+        const dropzone = document.getElementById('dropzone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => {
+                dropzone.classList.add('bg-primary-container/10');
+                dropzone.classList.add('border-primary');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropzone.addEventListener(eventName, () => {
+                dropzone.classList.remove('bg-primary-container/10');
+                dropzone.classList.remove('border-primary');
+            }, false);
+        });
+
+        dropzone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            // Simplified logic for UI feedback
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if(files.length > 0) {
+                alert('File "' + files[0].name + '" received. In a real app, parsing would start now.');
+            }
+        }
+    </script>
+</body></html>

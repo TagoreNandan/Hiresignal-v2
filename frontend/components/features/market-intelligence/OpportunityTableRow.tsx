@@ -1,34 +1,32 @@
 import React from 'react';
 import { Opportunity } from '@/types/opportunity';
-import {
-  TableRow,
-  TableCell,
-} from '@/components/ui/Table';
 
 interface OpportunityTableRowProps {
   opportunity: Opportunity;
 }
 
 export function OpportunityTableRow({ opportunity }: OpportunityTableRowProps) {
+  const isPending = opportunity.status === 'PENDING';
+
   return (
-    <TableRow>
-      <TableCell className="font-data-mono text-data-mono text-on-tertiary-fixed-variant">
+    <tr className="hover:bg-surface-container-lowest transition-colors">
+      <td className="py-4 px-6 font-data-mono text-data-mono text-on-tertiary-fixed-variant">
         {opportunity.id}
-      </TableCell>
-      <TableCell>
+      </td>
+      <td className="py-4 px-6">
         <div className="font-body-md text-body-md font-bold text-on-surface">
           {opportunity.company}
         </div>
         <div className="font-data-mono text-[11px] text-on-tertiary-fixed-variant">
           {opportunity.position} • {opportunity.location}
         </div>
-      </TableCell>
-      <TableCell>
+      </td>
+      <td className="py-4 px-6">
         <span className="bg-surface-container border border-outline-variant px-2 py-1 font-data-mono text-[11px] text-on-surface uppercase">
           {opportunity.source}
         </span>
-      </TableCell>
-      <TableCell>
+      </td>
+      <td className="py-4 px-6">
         <div className="flex items-center gap-2">
           <span className="font-data-mono text-data-mono text-primary">
             {opportunity.score.toFixed(1)}
@@ -40,30 +38,26 @@ export function OpportunityTableRow({ opportunity }: OpportunityTableRowProps) {
             ></div>
           </div>
         </div>
-      </TableCell>
-      <TableCell>
+      </td>
+      <td className="py-4 px-6">
         <span
           className={`flex items-center gap-2 font-data-mono text-data-mono ${
-            opportunity.status === 'ACTIVE'
-              ? 'text-primary'
-              : 'text-on-surface-variant'
+            isPending ? 'text-on-surface-variant' : 'text-primary'
           }`}
         >
           <span
             className={`w-1.5 h-1.5 rounded-full ${
-              opportunity.status === 'ACTIVE'
-                ? 'bg-primary'
-                : 'bg-on-tertiary-fixed-variant'
+              isPending ? 'bg-on-tertiary-fixed-variant' : 'bg-primary'
             }`}
           ></span>
           {opportunity.status}
         </span>
-      </TableCell>
-      <TableCell className="text-right">
+      </td>
+      <td className="py-4 px-6 text-right">
         <button className="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">
           open_in_new
         </button>
-      </TableCell>
-    </TableRow>
+      </td>
+    </tr>
   );
 }

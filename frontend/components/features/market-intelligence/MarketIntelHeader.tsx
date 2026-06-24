@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '../../ui/Button';
 
 export function MarketIntelHeader() {
   return (
@@ -16,8 +15,12 @@ export function MarketIntelHeader() {
         </h1>
       </div>
       <div className="flex gap-unit bg-surface-container p-unit border border-outline-variant">
-        <Button variant="primary">Predictive</Button>
-        <Button variant="secondary">Historical</Button>
+        <button className="bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-2 uppercase tracking-wider">
+          Predictive
+        </button>
+        <button className="text-on-surface-variant font-label-md text-label-md px-6 py-2 uppercase tracking-wider hover:bg-surface-container-high transition-colors">
+          Historical
+        </button>
       </div>
     </div>
   );

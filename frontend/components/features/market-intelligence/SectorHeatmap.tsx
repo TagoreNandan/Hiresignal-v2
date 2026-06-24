@@ -1,14 +1,13 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, CardFooter } from '../../ui/Card';
 import { sectors } from '@/lib/data';
 
-export function SectorsHeatmap() {
+export function SectorHeatmap() {
   return (
-    <Card className="flex flex-col">
-      <CardHeader>
+    <div className="bg-surface border border-outline-variant flex flex-col">
+      <div className="p-6 border-b border-outline-variant">
         <h3 className="font-headline-md text-headline-md">Sectors Heatmap</h3>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4 flex-grow overflow-y-auto custom-scrollbar">
+      </div>
+      <div className="p-6 flex flex-col gap-4 flex-grow overflow-y-auto custom-scrollbar">
         {sectors.map((sector) => (
           <div key={sector.name} className="group cursor-pointer">
             <div className="flex justify-between items-center mb-2">
@@ -27,12 +26,12 @@ export function SectorsHeatmap() {
             </div>
           </div>
         ))}
-      </CardContent>
-      <CardFooter>
+      </div>
+      <div className="p-6 border-t border-outline-variant bg-surface-container-low">
         <button className="w-full text-center font-label-md text-label-md text-primary uppercase tracking-widest hover:underline">
           Full Sector Audit
         </button>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }

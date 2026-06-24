@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from '@/components/ui/Card';
 import { Metric } from '@/types/market';
 
 interface MarketStatsCardProps {
@@ -8,7 +7,7 @@ interface MarketStatsCardProps {
 
 export function MarketStatsCard({ metric }: MarketStatsCardProps) {
   return (
-    <Card className="p-6 bg-gradient-to-br from-surface to-surface-container-low">
+    <div className="bg-surface border border-outline-variant p-6 bg-gradient-to-br from-surface to-surface-container-low">
       <div className="flex justify-between items-start mb-4">
         <span className="font-label-md text-label-md text-on-surface-variant uppercase">
           {metric.label}
@@ -27,6 +26,6 @@ export function MarketStatsCard({ metric }: MarketStatsCardProps) {
           </span>
         </div>
       )}
-    </Card>
+    </div>
   );
 }

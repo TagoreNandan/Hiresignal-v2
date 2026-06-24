@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HireSignal | Command Center</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#faf9f5",
+                    "tertiary": "#446370",
+                    "on-secondary-fixed": "#2f1314",
+                    "inverse-on-surface": "#f2f1ed",
+                    "inverse-surface": "#30312e",
+                    "primary-container": "#8ba88e",
+                    "background": "#faf9f5",
+                    "surface-container-highest": "#e3e2df",
+                    "primary-fixed-dim": "#b0ceb2",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#4a654e",
+                    "primary": "#4a654e",
+                    "secondary": "#7b5455",
+                    "on-primary-fixed": "#07200f",
+                    "on-primary-container": "#233d29",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#1b3b47",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#001f29",
+                    "outline": "#737972",
+                    "tertiary-container": "#86a5b4",
+                    "on-error": "#ffffff",
+                    "primary-fixed": "#cceace",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e9e8e4",
+                    "surface": "#faf9f5",
+                    "on-surface": "#1b1c1a",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed": "#ffdad9",
+                    "on-secondary-fixed-variant": "#603d3e",
+                    "tertiary-fixed-dim": "#abcbdb",
+                    "on-background": "#1b1c1a",
+                    "secondary-container": "#fdcbcb",
+                    "surface-variant": "#e3e2df",
+                    "on-primary-fixed-variant": "#334d38",
+                    "surface-container-low": "#f5f4f0",
+                    "outline-variant": "#c2c8c0",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#2c4b57",
+                    "inverse-primary": "#b0ceb2",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#c7e8f7",
+                    "surface-container": "#efeeea",
+                    "secondary-fixed-dim": "#ecbbba",
+                    "on-surface-variant": "#424842",
+                    "surface-dim": "#dbdad6",
+                    "on-secondary-container": "#795354"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sidebar-width": "280px",
+                    "card-padding": "32px",
+                    "container-margin": "40px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "display": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #faf9f5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #1b1c1a;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .active-glow {
+            box-shadow: 0 0 15px rgba(74, 101, 78, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface-bright min-h-screen">
+<!-- Sidebar Navigation (From JSON Specification) -->
+<aside class="fixed left-6 top-6 bottom-6 w-sidebar-width rounded-lg glass-card flex flex-col p-6 z-50">
+<div class="mb-10 px-3">
+<h1 class="font-headline-lg text-headline-lg text-primary">HireSignal</h1>
+<p class="font-label-md text-label-md text-on-surface-variant opacity-70">Command Center</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Dashboard (Active) -->
+<a class="flex items-center gap-4 bg-primary-container/30 text-on-primary-container rounded-DEFAULT p-3 font-bold hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<!-- Applications -->
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Applications</span>
+</a>
+<!-- Analytics -->
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<!-- Profile -->
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto p-4 rounded-lg bg-tertiary-container/20 border border-white/20">
+<div class="flex items-center gap-3 mb-2">
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="A professional studio portrait of a young tech professional with a warm, confident smile, wearing a modern sage-green sweater. The lighting is soft and airy, matching the minimalist light-mode aesthetic of a premium digital sanctuary dashboard. The background is a clean, neutral cream color with high-end photographic bokeh." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFHsJ-bpRzmjnPv3ky1jFS52SzB-qdCkxdD3p8OZ7ZCl_fBuXoUqPus5CJuYTCykddH5lYDYADbaSFBIFLO4Q9GUCKWQ9NQB-QjVElNLElYfowmhCbK5NGoLsujokdWh525tolEzfO5x00G1RkOXS888WjfXpDIFuKU2nvNlyKKM3X2sPFBplft21RhKGz4gUK4LwaAuiniAngjOCcVYLHu_i7svFjn35T4tr9T1WDo_a1Ooc80ScRxexuMXDrOm34kkhLY8249vs"/>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Rivera</p>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant">Pro Plan</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top Navigation Bar (From JSON Specification) -->
+<header class="fixed top-6 right-6 left-[calc(280px+48px)] h-20 rounded-lg glass-card flex justify-between items-center px-8 z-40">
+<div class="flex items-center bg-surface-container-low px-4 py-2 rounded-full border border-outline-variant/30 w-96">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-outline-variant" placeholder="Search applications, roles, or companies..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all shadow-md active-glow flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Add Application
+            </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="pl-[calc(280px+48px)] pt-32 pr-10 pb-10 min-h-screen">
+<!-- Welcome Header -->
+<div class="mb-8">
+<h2 class="font-display text-display text-on-surface mb-2">Good morning, Alex.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">You have <span class="text-primary font-bold">3 interviews</span> scheduled for this week. Stay focused.</p>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+<div class="glass-card rounded-lg p-6 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-fixed rounded-lg">
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">+12%</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Total Applications</p>
+<h3 class="font-headline-lg text-headline-lg mt-1">128</h3>
+</div>
+<div class="glass-card rounded-lg p-6 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-tertiary-fixed rounded-lg">
+<span class="material-symbols-outlined text-tertiary">schedule</span>
+</div>
+<span class="text-xs font-bold text-tertiary bg-tertiary/10 px-2 py-1 rounded-full">Active</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Pending</p>
+<h3 class="font-headline-lg text-headline-lg mt-1">42</h3>
+</div>
+<div class="glass-card rounded-lg p-6 hover:scale-[1.02] transition-transform duration-300 border-primary/20">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-fixed rounded-lg">
+<span class="material-symbols-outlined text-secondary">video_call</span>
+</div>
+<span class="text-xs font-bold text-secondary bg-secondary/10 px-2 py-1 rounded-full">Next: 2h</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Interviews</p>
+<h3 class="font-headline-lg text-headline-lg mt-1">14</h3>
+</div>
+<div class="glass-card rounded-lg p-6 hover:scale-[1.02] transition-transform duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-green-100 rounded-lg">
+<span class="material-symbols-outlined text-green-700">stars</span>
+</div>
+<span class="text-xs font-bold text-green-700 bg-green-50 px-2 py-1 rounded-full">New</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-tighter">Offers</p>
+<h3 class="font-headline-lg text-headline-lg mt-1">2</h3>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Recent Activity Table -->
+<div class="col-span-12 lg:col-span-8">
+<div class="glass-card rounded-lg p-card-padding">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md">Recent Activity</h4>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                            View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full">
+<thead>
+<tr class="text-left border-b border-outline-variant/30">
+<th class="pb-4 font-label-md text-label-md text-on-surface-variant uppercase">Company</th>
+<th class="pb-4 font-label-md text-label-md text-on-surface-variant uppercase">Role</th>
+<th class="pb-4 font-label-md text-label-md text-on-surface-variant uppercase">Status</th>
+<th class="pb-4 font-label-md text-label-md text-on-surface-variant uppercase">Match</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-white/30 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white p-1.5 shadow-sm border border-outline-variant/20">
+<img class="w-full h-full object-contain" data-alt="A minimalist tech logo for a company named Linear. The logo is a clean, stylized geometric circle in high-contrast black and white. Professional vector aesthetic, perfectly centered on a white background with subtle shadow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7tMWU4xkc1DfmDjm8AO5ydXDiAIiHcdvLjWM6u2RkdTn2qUe61VrrRUdXzXt-moNzzODh6iWlgXAsb3RstLscOCv3GNdfiICkOc9UfQHk04P9FfGJhH4qrbAz76CexZvNUh6t2LBHcDEIHemGO0fsv95CkbJwb09WVRxltzmcTpIoXyZLHYL8zxMrHBFCHMmhkd5epn4db0ArVQDAlTS735tU8jEACPnhMsmIS9oJUmFkpw5tZUWdZS5kOYUyrYvvoLKLvwUbfYA"/>
+</div>
+<span class="font-body-md text-body-md font-medium">Linear</span>
+</td>
+<td class="py-4 font-body-md text-body-md text-on-surface-variant">Senior Product Designer</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full text-xs font-bold">Interviewing</span>
+</td>
+<td class="py-4 font-bold text-primary">98%</td>
+</tr>
+<tr class="hover:bg-white/30 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white p-1.5 shadow-sm border border-outline-variant/20">
+<img class="w-full h-full object-contain" data-alt="A clean, modern logo for Stripe featuring a vibrant violet gradient background and a crisp white 'S' symbol. High-end fintech aesthetic with soft lighting and premium finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3M-6h03wPAuzzdQR5cU8fGDFmoh5j-sBnBB-Ju49OcOMqbPRi0g5QS9lHc9Dzqj1wuD11PbBcDoO9KazIRH7yvwtTEo9_OrolURHRZBEuoIBOUkDdWvir3RAKwlZf7-1uOrHuD6FfHOYeGsfLxWAcG8YR7kPpR4xBZ3L-r-rol3lZ3VOFheM3i9rSreDOoebH9SRWvfskq1OXLkfdTcy-scP9qzlmk6wgDDPpcbZcUvdCiIFSK2QCThkgcBNZd5-5nuEi2GAMKRk"/>
+</div>
+<span class="font-body-md text-body-md font-medium">Stripe</span>
+</td>
+<td class="py-4 font-body-md text-body-md text-on-surface-variant">Staff Engineer</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant rounded-full text-xs font-bold">Applied</span>
+</td>
+<td class="py-4 font-bold text-on-surface-variant">84%</td>
+</tr>
+<tr class="hover:bg-white/30 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white p-1.5 shadow-sm border border-outline-variant/20">
+<img class="w-full h-full object-contain" data-alt="A bold, creative logo for Figma featuring its signature multi-colored aesthetic with soft, rounded shapes. The lighting is high-key and optimistic, symbolizing a creative workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAguuTjJUD1T_wqle33nZ5NINbB04cABfo1DnMaNRMS1RMwExitkfR-zGEgSiVWihjdBxUBN9JCKhkosJuXu1no98mGVPjmXpAsyRpROSSBvX7DrnSbseX6yUz8zmOq3mMHY2lNmxGyU7kVXLuvVG3jSt5wWTLsVkHxR3g62TBZbX_wGOeQfb0BNnMWgv5q5bTO68MmkdeZ8DQQRs5nudcRMCTt9z_Pl28I6ddyAto5KVkoab3qRp7Kc462G9eC5pOYotWLchyRhn8"/>
+</div>
+<span class="font-body-md text-body-md font-medium">Figma</span>
+</td>
+<td class="py-4 font-body-md text-body-md text-on-surface-variant">UX Researcher</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-xs font-bold">Technical Task</span>
+</td>
+<td class="py-4 font-bold text-primary">92%</td>
+</tr>
+<tr class="hover:bg-white/30 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white p-1.5 shadow-sm border border-outline-variant/20">
+<img class="w-full h-full object-contain" data-alt="A minimalist logo for a startup named Vercel, featuring a simple black triangle pointing upwards. The style is ultra-modern, crisp, and high-tech, set against a pristine white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtrJ4cLnPiBFpGbU9l819hNZ6tKLCZkBmDARoussyUG7e15ypYid0RJHkrKYPVwQHl0lAcVoW-0S_V9I5T923Lv0TgRP7C4kslFNa1y_47FNlLCNmMrJbDzuiFMrxuRMjKcRFO5JS6Z1PldvoNH6zhFktXQtd5LLsA8BDaor_KR4fTFNtNyBbjNbawpY2sIQptD7gg9BRxXIx37IjeF1sucjakkNBXiQAR-t2j6BT2l7pjEFjMOMPnKpAphfhIANNoBOJ3CLiCfDU"/>
+</div>
+<span class="font-body-md text-body-md font-medium">Vercel</span>
+</td>
+<td class="py-4 font-body-md text-body-md text-on-surface-variant">Frontend Developer</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-secondary-fixed text-on-secondary-fixed-variant rounded-full text-xs font-bold">Offer</span>
+</td>
+<td class="py-4 font-bold text-primary">95%</td>
+</tr>
+<tr class="hover:bg-white/30 transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-white p-1.5 shadow-sm border border-outline-variant/20">
+<img class="w-full h-full object-contain" data-alt="A clean, professional logo for Netflix. Red iconic 'N' against a soft white background. Modern media company aesthetic with cinematic lighting quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyyTyDc7Pxbi6oiPqVDwVZNkBsLlEnhhhJ-7u_T_nJMs7M-g2jkGRMKBhaD64LdTpOFMZ2RC7qv6x5me0aanTR_JC8URAgoZafK6bVE26ZZPAE4PkoTKhTX56rBiBcswrOd_WjO2fklw1OpTNwRufy0R9n299LYGT6xw61uP1s7mv3V1AMbNZSJDgDaRDvYMlRcgpCPL7RhG3krEUQMyEEPX5b2kuLWIg7-H_m4BD1mEH8kYHdKIt9tkEySBGNxJzn0ouDQVjrltY"/>
+</div>
+<span class="font-body-md text-body-md font-medium">Netflix</span>
+</td>
+<td class="py-4 font-body-md text-body-md text-on-surface-variant">Creative Director</td>
+<td class="py-4">
+<span class="px-3 py-1 bg-error-container text-on-error-container rounded-full text-xs font-bold">Rejected</span>
+</td>
+<td class="py-4 font-bold text-on-surface-variant">71%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Side Panels Column -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<!-- AI Insights Panel -->
+<div class="glass-card rounded-lg p-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl text-primary">auto_awesome</span>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<h4 class="font-headline-md text-[20px] font-bold">AI Insights</h4>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-primary/5 rounded-lg border border-primary/10">
+<div class="flex justify-between items-start mb-2">
+<p class="text-xs font-bold text-primary uppercase">Resume Match</p>
+<span class="text-lg font-bold text-primary">94%</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Your profile strongly matches the <span class="font-bold">Principal Designer</span> role at Arc. Consider applying before EOD.</p>
+</div>
+<div class="p-4 bg-tertiary/5 rounded-lg border border-tertiary/10">
+<p class="text-xs font-bold text-tertiary uppercase mb-2">Smart Reminders</p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+                                    Follow up with Linear HR
+                                </li>
+<li class="flex items-center gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+                                    Update portfolio links
+                                </li>
+</ul>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border-2 border-primary text-primary rounded-full font-label-md text-label-md hover:bg-primary hover:text-white transition-all">
+                        Ask AI Assistant
+                    </button>
+</div>
+<!-- Upcoming Interviews Panel -->
+<div class="glass-card rounded-lg p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-[20px] font-bold">Interviews</h4>
+<span class="text-xs bg-secondary-fixed text-on-secondary-fixed-variant px-2 py-1 rounded">Next 48h</span>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 p-3 rounded-lg hover:bg-white/20 transition-all cursor-pointer">
+<div class="flex flex-col items-center justify-center bg-white rounded-lg w-12 h-12 shadow-sm border border-outline-variant/30">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Oct</span>
+<span class="text-xl font-bold text-on-surface leading-tight">12</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-sm">Linear: Technical Round</p>
+<p class="text-xs text-on-surface-variant">10:00 AM • Zoom</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant text-[20px]">videocam</span>
+</div>
+<div class="flex gap-4 p-3 rounded-lg hover:bg-white/20 transition-all cursor-pointer border-l-4 border-primary">
+<div class="flex flex-col items-center justify-center bg-white rounded-lg w-12 h-12 shadow-sm border border-outline-variant/30">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Oct</span>
+<span class="text-xl font-bold text-on-surface leading-tight">14</span>
+</div>
+<div>
+<p class="font-bold text-on-surface text-sm">Arc: Culture Fit</p>
+<p class="text-xs text-on-surface-variant">02:30 PM • Google Meet</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant text-[20px]">groups</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Background Atmosphere -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute top-[40%] -right-[10%] w-[50%] h-[50%] bg-tertiary/5 blur-[100px] rounded-full"></div>
+<div class="absolute -bottom-[10%] left-[20%] w-[40%] h-[40%] bg-secondary/5 blur-[110px] rounded-full"></div>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1.02)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple Fade In Animation
+        window.onload = () => {
+            const main = document.querySelector('main');
+            main.style.opacity = '0';
+            main.style.transform = 'translateY(10px)';
+            main.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            
+            setTimeout(() => {
+                main.style.opacity = '1';
+                main.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    </script>
+</body></html>

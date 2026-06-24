@@ -8,19 +8,24 @@ interface LocationInputProps {
 
 export function LocationInput({ value, onChange }: LocationInputProps) {
   return (
-    <div>
-      <label htmlFor="location" className="block text-sm font-medium text-on-surface-variant">
-        Preferred Location
+    <div className="space-y-4">
+      <label htmlFor="location" className="font-label-md text-label-md text-on-surface uppercase block tracking-wider">
+        Location
       </label>
-      <input
-        type="text"
-        id="location"
-        name="location"
-        value={value}
-        onChange={onChange}
-        placeholder="e.g., San Francisco, CA or Remote"
-        className="mt-1 block w-full bg-surface-container border border-outline-variant p-2 focus:ring-primary focus:border-primary"
-      />
+      <div className="relative border-b border-surface-container-highest focus-within:border-primary-container transition-all">
+        <input
+          type="text"
+          id="location"
+          name="location"
+          value={value}
+          onChange={onChange}
+          placeholder="Remote, New York, London"
+          className="w-full border-0 focus:ring-0 py-3 text-body-lg font-body-lg placeholder:text-surface-variant bg-transparent text-on-surface"
+        />
+        <span className="material-symbols-outlined absolute right-0 top-3 text-secondary">
+          location_on
+        </span>
+      </div>
     </div>
   );
 }

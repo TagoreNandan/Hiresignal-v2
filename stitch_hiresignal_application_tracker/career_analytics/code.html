@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HireSignal | Analytics Dashboard</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-bright": "#faf9f5",
+                "tertiary": "#446370",
+                "on-secondary-fixed": "#2f1314",
+                "inverse-on-surface": "#f2f1ed",
+                "inverse-surface": "#30312e",
+                "primary-container": "#8ba88e",
+                "background": "#faf9f5",
+                "surface-container-highest": "#e3e2df",
+                "primary-fixed-dim": "#b0ceb2",
+                "on-tertiary": "#ffffff",
+                "surface-tint": "#4a654e",
+                "primary": "#4a654e",
+                "secondary": "#7b5455",
+                "on-primary-fixed": "#07200f",
+                "on-primary-container": "#233d29",
+                "error-container": "#ffdad6",
+                "on-tertiary-container": "#1b3b47",
+                "error": "#ba1a1a",
+                "on-tertiary-fixed": "#001f29",
+                "outline": "#737972",
+                "tertiary-container": "#86a5b4",
+                "on-error": "#ffffff",
+                "primary-fixed": "#cceace",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-high": "#e9e8e4",
+                "surface": "#faf9f5",
+                "on-surface": "#1b1c1a",
+                "on-error-container": "#93000a",
+                "secondary-fixed": "#ffdad9",
+                "on-secondary-fixed-variant": "#603d3e",
+                "tertiary-fixed-dim": "#abcbdb",
+                "on-background": "#1b1c1a",
+                "secondary-container": "#fdcbcb",
+                "surface-variant": "#e3e2df",
+                "on-primary-fixed-variant": "#334d38",
+                "surface-container-low": "#f5f4f0",
+                "outline-variant": "#c2c8c0",
+                "on-primary": "#ffffff",
+                "on-tertiary-fixed-variant": "#2c4b57",
+                "inverse-primary": "#b0ceb2",
+                "on-secondary": "#ffffff",
+                "tertiary-fixed": "#c7e8f7",
+                "surface-container": "#efeeea",
+                "secondary-fixed-dim": "#ecbbba",
+                "on-surface-variant": "#424842",
+                "surface-dim": "#dbdad6",
+                "on-secondary-container": "#795354"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "sidebar-width": "280px",
+                "card-padding": "32px",
+                "container-margin": "40px",
+                "unit": "8px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "display": ["Plus Jakarta Sans"],
+                "headline-md": ["Plus Jakarta Sans"],
+                "headline-lg": ["Plus Jakarta Sans"],
+                "body-md": ["Plus Jakarta Sans"],
+                "body-lg": ["Plus Jakarta Sans"],
+                "label-md": ["Plus Jakarta Sans"],
+                "caption": ["Plus Jakarta Sans"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #faf9f5;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-gradient {
+            background: linear-gradient(180deg, rgba(74, 101, 78, 0.2) 0%, rgba(74, 101, 78, 0) 100%);
+        }
+        .circle-progress {
+            transition: stroke-dashoffset 1s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Background Atmospheric Shader -->
+
+<!-- Side Navigation Bar -->
+<aside class="fixed left-6 top-6 bottom-6 w-sidebar-width rounded-lg glass-panel shadow-sm border border-white/30 flex flex-col p-6 z-50">
+<div class="mb-10 px-3">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">HireSignal</h1>
+<p class="font-label-md text-label-md text-on-surface-variant/70 uppercase tracking-widest">Command Center</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Applications</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-4 bg-primary-container/30 text-on-primary-container rounded-DEFAULT p-3 font-bold scale-[0.98] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant p-3 hover:bg-primary/5 hover:scale-[1.02] transition-transform duration-300" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-primary/5 rounded-lg border border-primary/10">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a modern HR director, wearing soft earth-toned clothing. The lighting is warm and cinematic, reflecting a high-end minimalist corporate aesthetic with soft bokeh in the background. The mood is calm, confident, and professional, aligning with a premium SaaS brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3YoYtWKDUJDDlkrYKxI5BFgryQL7RGFeohWT1-rOYF_lIOD9MKJLH0iuFBBkYkpYeOxLo61Iob7tl__kImC9gHzMBHRAFxBW5EK13_Vh9ZRxeBgk1tpDeN9M2_aY6oLgkObTyAMLl4MR0pEVjA3HGyhumXSKLnV7XrPEHaXHX1bi_VL-aIRFsB5MzZbkIJUqJShMW356G01wG8olA3KYh0EqzOjXpQVNhfX1pmo8cz-YViOTtHRFHL5zWqQq_re-nQXR7VksGC-s"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Rivera</p>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant/60">Admin Access</p>
+</div>
+</div>
+<button class="w-full py-2 bg-primary text-on-primary rounded-full font-label-md text-label-md hover:opacity-90 transition-opacity">
+                Sign Out
+            </button>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-6 right-6 left-[calc(280px+48px)] h-20 rounded-lg glass-panel shadow-sm border border-white/30 flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low/50 border-none rounded-full py-2.5 pl-12 pr-4 text-body-md focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/40" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+<span class="font-label-md text-label-md text-on-surface">Q3 Performance</span>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-32 ml-[calc(280px+48px)] pr-12 pb-12">
+<!-- Header Section -->
+<section class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Recruitment Insights</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time performance metrics and conversion funnel overview.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 rounded-full border border-primary/20 text-primary font-label-md text-label-md bg-white/50 hover:bg-white/80 transition-all">
+                    Export Report
+                </button>
+<button class="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                    Update Data
+                </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Conversion Rates (Circular Gauges) -->
+<div class="col-span-12 lg:col-span-4 grid grid-cols-1 gap-8">
+<div class="glass-panel rounded-lg p-card-padding shadow-sm hover:scale-[1.01] transition-transform duration-500 flex flex-col items-center justify-center text-center">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-6">Interview Conversion</p>
+<div class="relative w-40 h-40">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary circle-progress" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display text-headline-lg text-primary">75%</span>
+<span class="font-caption text-caption text-on-surface-variant">+4% vs LW</span>
+</div>
+</div>
+<p class="mt-6 font-body-md text-body-md text-on-surface-variant/80">Candidates moving from Screening to First Interview.</p>
+</div>
+<div class="glass-panel rounded-lg p-card-padding shadow-sm hover:scale-[1.01] transition-transform duration-500 flex flex-col items-center justify-center text-center border-l-4 border-l-secondary/40">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-6">Offer Acceptance Rate</p>
+<div class="relative w-40 h-40">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary circle-progress" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="30.1" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display text-headline-lg text-secondary">88%</span>
+<span class="font-caption text-caption text-on-surface-variant">Top Tier</span>
+</div>
+</div>
+<p class="mt-6 font-body-md text-body-md text-on-surface-variant/80">Offers accepted out of total offers extended this month.</p>
+</div>
+</div>
+<!-- Applications Over Time (Line Chart) -->
+<div class="col-span-12 lg:col-span-8 glass-panel rounded-lg p-card-padding shadow-sm">
+<div class="flex justify-between items-start mb-8">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Applications over time</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Organic vs Sponsored Growth</h3>
+</div>
+<div class="flex gap-2 bg-surface-container-low p-1 rounded-full">
+<button class="px-4 py-1.5 rounded-full bg-white shadow-sm font-label-md text-label-md">Monthly</button>
+<button class="px-4 py-1.5 rounded-full text-on-surface-variant font-label-md text-label-md">Weekly</button>
+</div>
+</div>
+<div class="relative h-64 w-full mt-4">
+<!-- Abstract Visualization of a Line Chart -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 240">
+<defs>
+<lineargradient id="line-grad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="rgba(74, 101, 78, 0.3)"></stop>
+<stop offset="100%" stop-color="rgba(74, 101, 78, 0)"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line stroke="#e3e2df" stroke-width="1" x1="0" x2="800" y1="60" y2="60"></line>
+<line stroke="#e3e2df" stroke-width="1" x1="0" x2="800" y1="120" y2="120"></line>
+<line stroke="#e3e2df" stroke-width="1" x1="0" x2="800" y1="180" y2="180"></line>
+<!-- Area Fill -->
+<path d="M0,200 L50,180 L150,190 L250,110 L350,130 L450,70 L550,90 L650,40 L750,55 L800,45 L800,240 L0,240 Z" fill="url(#line-grad)"></path>
+<!-- Main Line -->
+<path d="M0,200 L50,180 L150,190 L250,110 L350,130 L450,70 L550,90 L650,40 L750,55 L800,45" fill="none" stroke="#4a654e" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<!-- Points -->
+<circle cx="250" cy="110" fill="#4a654e" r="6" stroke="white" stroke-width="3"></circle>
+<circle cx="450" cy="70" fill="#4a654e" r="6" stroke="white" stroke-width="3"></circle>
+<circle cx="650" cy="40" fill="#4a654e" r="6" stroke="white" stroke-width="3"></circle>
+</svg>
+<!-- X-Axis Labels -->
+<div class="flex justify-between mt-4 px-2 text-caption font-label-md text-on-surface-variant/60">
+<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span>
+</div>
+</div>
+<div class="mt-8 flex gap-8">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<div class="flex flex-col">
+<span class="text-caption font-label-md text-on-surface-variant uppercase">Organic</span>
+<span class="font-body-md font-bold text-on-surface">1,240</span>
+</div>
+</div>
+<div class="flex items-center gap-3 opacity-50">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<div class="flex flex-col">
+<span class="text-caption font-label-md text-on-surface-variant uppercase">Sponsored</span>
+<span class="font-body-md font-bold text-on-surface">432</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Source Effectiveness (Bar Chart) -->
+<div class="col-span-12 lg:col-span-7 glass-panel rounded-lg p-card-padding shadow-sm">
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-6">Source Effectiveness</p>
+<div class="space-y-6">
+<!-- Bar 1 -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-md text-on-surface">LinkedIn Jobs</span>
+<span class="font-label-md text-on-surface font-bold">42%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[42%] rounded-full shadow-[0_0_10px_rgba(74,101,78,0.3)]"></div>
+</div>
+</div>
+<!-- Bar 2 -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-md text-on-surface">Direct Referrals</span>
+<span class="font-label-md text-on-surface font-bold">28%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[28%] rounded-full"></div>
+</div>
+</div>
+<!-- Bar 3 -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-md text-on-surface">Company Career Page</span>
+<span class="font-label-md text-on-surface font-bold">18%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[18%] rounded-full"></div>
+</div>
+</div>
+<!-- Bar 4 -->
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-body-md text-on-surface">Indeed</span>
+<span class="font-label-md text-on-surface font-bold">12%</span>
+</div>
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant w-[12%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Insight Card (Call to action) -->
+<div class="col-span-12 lg:col-span-5 relative overflow-hidden rounded-lg group">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A macro shot of crystalline abstract structures with soft green and amber lighting. The texture is ethereal and glass-like, creating a sense of clarity and intelligence. The composition is dynamic and futuristic, reflecting a professional high-end digital sanctuary mood with warm light-mode tones and blurred geometric depth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfKSdkghsu3OyylymBlz-3V7duJJE3MRyeJXLqs7GukTSlCkm2I5qrI42vOw6tlEyVVc6U3Jb2JltUwRTqDVRij8wcJ5dWLArRu4XoBU1SozGgHVqG50kn79Jnp1tBaBSjNplELj66IWCr74kRiFIKC0FcVpCZLHUHOY7ADkCrkW0fHVn6seXZ1m-NTrjRP6hgiHHnUtfAJsJ8iGX77uUs4-eYJuDOixPTEUY0gc6PzQLobzjKxluYvUsS1DuZ416oAhgzsKUlj4c"/>
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-[2px]"></div>
+</div>
+<div class="relative z-10 p-card-padding h-full flex flex-col justify-end text-white">
+<span class="material-symbols-outlined text-4xl mb-4">auto_awesome</span>
+<h3 class="font-headline-md text-headline-md mb-2">AI Talent Insight</h3>
+<p class="font-body-md text-body-md opacity-90 mb-6">"Based on Q3 data, candidates from **Direct Referrals** are 2.4x more likely to reach the final interview stage than other sources."</p>
+<button class="w-fit px-8 py-3 bg-white text-primary font-label-md text-label-md rounded-full shadow-xl hover:bg-surface-bright transition-colors">
+                        View Detailed Prediction
+                    </button>
+</div>
+</div>
+</div>
+<!-- Recent Activity Mini List -->
+<section class="mt-12 glass-panel rounded-lg p-card-padding shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Recent Analytics Alerts</h3>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                    View all logs <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-6 p-4 rounded-lg bg-surface-container-low/50 hover:bg-white/80 transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md font-bold text-on-surface">Traffic Spike</h4>
+<p class="font-caption text-on-surface-variant">LinkedIn job postings saw a 45% increase in views over the last 24 hours.</p>
+</div>
+<span class="font-caption text-on-surface-variant/40">2h ago</span>
+</div>
+<div class="flex items-center gap-6 p-4 rounded-lg bg-surface-container-low/50 hover:bg-white/80 transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body-md font-bold text-on-surface">Bottleneck Detected</h4>
+<p class="font-caption text-on-surface-variant">Interview scheduling for 'Senior Frontend Engineer' role is exceeding 5 days.</p>
+</div>
+<span class="font-caption text-on-surface-variant/40">5h ago</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Micro-interaction Scripts -->
+<script>
+        // Simple hover lift effect for glass panels
+        const cards = document.querySelectorAll('.glass-panel');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Initialize progress circles with a slight delay for animation
+        window.addEventListener('load', () => {
+            const circles = document.querySelectorAll('.circle-progress');
+            circles.forEach(circle => {
+                const target = circle.getAttribute('stroke-dashoffset');
+                circle.style.strokeDashoffset = '251.2'; // Reset
+                setTimeout(() => {
+                    circle.style.strokeDashoffset = target;
+                }, 300);
+            });
+        });
+    </script>
+</body></html>
