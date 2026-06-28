@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { ProfileData } from '@/types/profile';
 import { createProfile, getProfile, updateProfile } from '@/lib/api';
 
 export default function ProfilePage() {
+  const router = useRouter();
   const [profileData, setProfileData] = useState<ProfileData>({
     role: 'Senior Software Engineer',
     skills: ['React', 'TypeScript', 'Node.js'],
@@ -24,6 +26,14 @@ export default function ProfilePage() {
   // 1. Rehydrate profile state from localStorage/API on page load
   useEffect(() => {
     const fetchStoredProfile = async () => {
+      // On first visit, generate a unique user email if not exists
+      let storedEmail = localStorage.getItem('hiresignal_user_email');
+      if (!storedEmail) {
+        const rand = Math.random().toString(36).substring(2, 10);
+        storedEmail = `user_${rand}_${Date.now()}@hiresignal.com`;
+        localStorage.setItem('hiresignal_user_email', storedEmail);
+      }
+
       const storedId = localStorage.getItem('hiresignal_user_id');
       if (storedId) {
         const parsedId = Number(storedId);
@@ -37,6 +47,9 @@ export default function ProfilePage() {
               experience: parseExperience(profile.year_of_study),
               location: profile.location_pref || 'Remote',
             });
+            if (profile.email) {
+              localStorage.setItem('hiresignal_user_email', profile.email);
+            }
           } catch (err: any) {
             console.error('Failed to load profile:', err);
             // If the user profile is deleted or not found on the backend, clear local storage
@@ -112,10 +125,17 @@ export default function ProfilePage() {
     }
 
     try {
-      const timestamp = userId ? userId : Date.now();
+      let storedEmail = localStorage.getItem('hiresignal_user_email');
+      if (!storedEmail) {
+        const rand = Math.random().toString(36).substring(2, 10);
+        storedEmail = `user_${rand}_${Date.now()}@hiresignal.com`;
+        localStorage.setItem('hiresignal_user_email', storedEmail);
+      }
+
+      const uniquePart = storedEmail.split('@')[0];
       const payload = {
-        name: `User ${timestamp}`,
-        email: `user_${timestamp}@hiresignal.com`,
+        name: `User ${uniquePart}`,
+        email: storedEmail,
         skills: profileData.skills,
         target_roles: [profileData.role],
         year_of_study: `${profileData.experience} Years`,
@@ -131,6 +151,11 @@ export default function ProfilePage() {
         setUserId(response.id);
       }
       setSuccess(true);
+
+      // Redirect to dashboard after a short delay
+      setTimeout(() => {
+        router.push('/');
+      }, 800);
     } catch (err: any) {
       setError(err.message || 'An error occurred while saving the profile.');
     } finally {
@@ -150,7 +175,7 @@ export default function ProfilePage() {
     <>
       <main className="min-h-[calc(100vh-160px)] flex items-center justify-center py-20 px-4">
         {/* Onboarding Card */}
-        <div className="w-full max-w-[640px] bg-surface-container-lowest border border-surface-container-highest p-12 md:p-16 relative overflow-hidden">
+        <div className="w-full max-w-[640px] bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-12 md:p-16 relative overflow-hidden shadow-2xl">
           {/* Signal Intelligence Accent */}
           <div className="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
           <section className="space-y-12">
@@ -182,29 +207,28 @@ export default function ProfilePage() {
                     name="role"
                     value={profileData.role}
                     onChange={handleInputChange}
-                    className="w-full border-0 border-b border-surface-container-highest focus:ring-0 focus:border-primary-container py-3 text-body-lg font-body-lg placeholder:text-surface-variant transition-all bg-transparent text-on-surface"
+                    className="w-full bg-surface-container-high/40 border border-outline-variant/30 focus:border-primary focus:ring-1 focus:ring-primary/20 rounded-full px-6 py-3.5 text-body-md font-body-md placeholder:text-on-surface-variant/40 transition-all text-on-surface focus:outline-none"
                     placeholder="e.g. Quantitative Analyst, Product Engineer"
                     type="text"
                     required
                   />
-                  <span className="material-symbols-outlined absolute right-0 top-3 text-secondary">
+                  <span className="material-symbols-outlined absolute right-5 top-3.5 text-secondary">
                     search
                   </span>
                 </div>
               </div>
-              {/* Grid for Year and Location */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter">
                 <div className="space-y-4">
                   <label htmlFor="experience" className="font-label-md text-label-md text-on-surface uppercase block">
                     Year of Study
                   </label>
-                  <div className="relative border-b border-surface-container-highest">
+                  <div className="relative flex items-center">
                     <select
                       id="experience"
                       name="experience"
                       value={profileData.experience}
                       onChange={handleInputChange}
-                      className="w-full border-0 focus:ring-0 py-3 text-body-lg font-body-lg appearance-none cursor-pointer bg-transparent text-on-surface"
+                      className="w-full bg-surface-container-high/40 border border-outline-variant/30 focus:border-primary focus:ring-1 focus:ring-primary/20 rounded-full px-6 py-3.5 pr-10 text-body-md font-body-md appearance-none cursor-pointer text-on-surface focus:outline-none"
                     >
                       <option value={1} className="bg-surface text-on-surface">Freshman / Year 1</option>
                       <option value={2} className="bg-surface text-on-surface">Sophomore / Year 2</option>
@@ -213,7 +237,7 @@ export default function ProfilePage() {
                       <option value={5} className="bg-surface text-on-surface">Master's / Graduate</option>
                       <option value={6} className="bg-surface text-on-surface">PhD / Research</option>
                     </select>
-                    <span className="material-symbols-outlined absolute right-0 top-3 pointer-events-none text-secondary">
+                    <span className="material-symbols-outlined absolute right-4 pointer-events-none text-secondary">
                       expand_more
                     </span>
                   </div>
@@ -222,18 +246,18 @@ export default function ProfilePage() {
                   <label htmlFor="location" className="font-label-md text-label-md text-on-surface uppercase block">
                     Location
                   </label>
-                  <div className="relative border-b border-surface-container-highest">
+                  <div className="relative">
                     <input
                       id="location"
                       name="location"
                       value={profileData.location}
                       onChange={handleInputChange}
-                      className="w-full border-0 focus:ring-0 py-3 text-body-lg font-body-lg placeholder:text-surface-variant bg-transparent text-on-surface"
+                      className="w-full bg-surface-container-high/40 border border-outline-variant/30 focus:border-primary focus:ring-1 focus:ring-primary/20 rounded-full px-6 py-3.5 text-body-md font-body-md placeholder:text-on-surface-variant/40 transition-all text-on-surface focus:outline-none"
                       placeholder="Remote, New York, London"
                       type="text"
                       required
                     />
-                    <span className="material-symbols-outlined absolute right-0 top-3 text-secondary">
+                    <span className="material-symbols-outlined absolute right-5 top-3.5 text-secondary">
                       location_on
                     </span>
                   </div>
@@ -248,10 +272,10 @@ export default function ProfilePage() {
                   {profileData.skills.map((skill, index) => (
                     <div
                       key={skill}
-                      className={`px-3 py-1 border font-data-mono text-data-mono flex items-center gap-2 uppercase tracking-wide bg-transparent ${
+                      className={`px-4 py-1.5 rounded-full border font-data-mono text-data-mono flex items-center gap-2 uppercase tracking-wide bg-transparent ${
                         index === 0
                           ? 'border-primary-container bg-primary-container/10 text-primary-container'
-                          : 'border-surface-container-highest text-secondary hover:border-on-surface transition-colors bg-transparent'
+                          : 'border-outline-variant/30 text-secondary hover:border-on-surface transition-colors bg-transparent'
                       }`}
                     >
                       {skill}
@@ -279,13 +303,13 @@ export default function ProfilePage() {
                       onBlur={handleAddSkill}
                       autoFocus
                       aria-label="Add new competency skill"
-                      className="px-3 py-1 border border-primary-container bg-transparent text-on-surface font-data-mono text-data-mono w-28 focus:outline-none focus:ring-0"
+                      className="px-4 py-1.5 rounded-full border border-primary-container/50 bg-transparent text-on-surface font-data-mono text-data-mono w-28 focus:outline-none focus:ring-1 focus:ring-primary-container/20"
                       placeholder="skill name..."
                     />
                   ) : (
                     <div
                       onClick={() => setIsAddingSkill(true)}
-                      className="px-3 py-1 border border-surface-container-highest border-dashed text-surface-variant font-data-mono text-data-mono cursor-pointer hover:text-secondary hover:border-secondary transition-all uppercase tracking-wider"
+                      className="px-4 py-1.5 rounded-full border border-outline-variant/30 border-dashed text-surface-variant font-data-mono text-data-mono cursor-pointer hover:text-secondary hover:border-secondary transition-all uppercase tracking-wider"
                     >
                       + ADD SKILL
                     </div>
@@ -318,6 +342,7 @@ export default function ProfilePage() {
                       location: 'Remote',
                     });
                     localStorage.removeItem('hiresignal_user_id');
+                    localStorage.removeItem('hiresignal_user_email');
                     setUserId(null);
                     setError(null);
                     setSuccess(false);
@@ -326,7 +351,7 @@ export default function ProfilePage() {
                   RESET CONFIG
                 </button>
                 <button
-                  className="w-full md:w-auto bg-primary-container text-on-primary-container px-10 py-4 font-label-md text-label-md hover:bg-[#8b5cf6] transition-all order-1 md:order-2 tracking-widest flex items-center justify-center gap-3 disabled:opacity-50"
+                  className="w-full md:w-auto bg-primary-container text-on-primary-container px-10 py-4 font-label-md text-label-md hover:bg-[#8b5cf6] rounded-full transition-all order-1 md:order-2 tracking-widest flex items-center justify-center gap-3 disabled:opacity-50"
                   type="submit"
                   disabled={submitting}
                 >

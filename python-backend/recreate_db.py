@@ -1,6 +1,6 @@
 import sys
 from database import engine, Base
-from models import User, Opportunity, JobApplication
+from models import User, Opportunity, JobApplication, Match
 from seed_data import seed_opportunities
 from sqlalchemy.orm import sessionmaker
 
@@ -9,6 +9,7 @@ def main():
     try:
         from sqlalchemy import text
         with engine.connect() as conn:
+            conn.execute(text("DROP TABLE IF EXISTS matches CASCADE;"))
             conn.execute(text("DROP TABLE IF EXISTS user_opportunity_matches CASCADE;"))
             conn.execute(text("DROP TABLE IF EXISTS job_applications CASCADE;"))
             conn.execute(text("DROP TABLE IF EXISTS opportunities CASCADE;"))

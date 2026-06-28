@@ -101,9 +101,13 @@ export async function getApplications(userId: number): Promise<JobApplicationRes
  */
 export async function createApplication(
   userId: number,
-  opportunityId: number,
+  opportunityId: number | null,
   status: string = 'APPLIED',
-  notes?: string
+  notes?: string,
+  company?: string,
+  title?: string,
+  source?: string,
+  appliedAt?: string
 ): Promise<JobApplicationResponse> {
   const response = await fetch(`${API_BASE_URL}/applications`, {
     method: 'POST',
@@ -112,9 +116,13 @@ export async function createApplication(
     },
     body: JSON.stringify({
       user_id: userId,
-      opportunity_id: opportunityId,
+      opportunity_id: opportunityId || undefined,
       status,
       notes,
+      company,
+      title,
+      source,
+      applied_at: appliedAt
     }),
   });
   return handleResponse<JobApplicationResponse>(response);
@@ -192,6 +200,65 @@ export async function seedOpportunities(opp?: any): Promise<any> {
     body: opp ? JSON.stringify(opp) : undefined,
   });
   return handleResponse<any>(response);
+}
+
+export interface MatchResponse {
+  id: number;
+  user_id: number;
+  opportunity_id: number;
+  score: number;
+  saved: boolean;
+  seen: boolean;
+  created_at: string;
+  opportunity: OpportunityResponse;
+}
+
+export async function generateMatches(userId: number): Promise<MatchResponse[]> {
+  const response = await fetch(`${API_BASE_URL}/matches/generate/${userId}`, {
+    method: 'POST',
+  });
+  return handleResponse<MatchResponse[]>(response);
+}
+
+export async function getFeed(userId: number): Promise<MatchResponse[]> {
+  const response = await fetch(`${API_BASE_URL}/feed/${userId}`);
+  return handleResponse<MatchResponse[]>(response);
+}
+
+export async function saveMatch(matchId: number): Promise<MatchResponse> {
+  const response = await fetch(`${API_BASE_URL}/matches/${matchId}/save`, {
+    method: 'POST',
+  });
+  return handleResponse<MatchResponse>(response);
+}
+
+export async function markMatchSeen(matchId: number): Promise<MatchResponse> {
+  const response = await fetch(`${API_BASE_URL}/matches/${matchId}/seen`, {
+    method: 'POST',
+  });
+  return handleResponse<MatchResponse>(response);
+}
+
+export interface DashboardMetrics {
+  total_opportunities: number;
+  total_users: number;
+  average_score: number | null;
+  pipeline_value: number;
+}
+
+export async function getMetrics(): Promise<DashboardMetrics> {
+  const response = await fetch(`${API_BASE_URL}/metrics`);
+  return handleResponse<DashboardMetrics>(response);
+}
+
+export async function getSectorDistribution(): Promise<{ [key: string]: number }> {
+  const response = await fetch(`${API_BASE_URL}/opportunities/sectors`);
+  return handleResponse<{ [key: string]: number }>(response);
+}
+
+export async function getApplicationSources(userId: number): Promise<{ [key: string]: number }> {
+  const response = await fetch(`${API_BASE_URL}/applications/sources/${userId}`);
+  return handleResponse<{ [key: string]: number }>(response);
 }
 
 

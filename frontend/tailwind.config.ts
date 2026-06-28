@@ -59,9 +59,9 @@ const config: Config = {
         "on-error": "#690005",
       },
       borderRadius: {
-        DEFAULT: "0px",
-        lg: "0px",
-        xl: "0px",
+        DEFAULT: "16px",
+        lg: "32px",
+        xl: "48px",
         full: "9999px",
       },
       spacing: {

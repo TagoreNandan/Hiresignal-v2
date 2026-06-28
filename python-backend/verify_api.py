@@ -126,6 +126,16 @@ def run_verification():
     assert saved_app["notes"] == notes_payload["notes"], "Application notes did not persist!"
     print("    -> Database check passed. Changes fully persisted.")
 
+    # Step 8.5: Get Application Sources (GET /applications/sources/{user_id})
+    print(f"[8.5] Retrieving application source metrics for user_id={user_id}...")
+    sources_response = client.get(f"{BASE_URL}/applications/sources/{user_id}")
+    assert sources_response.status_code == 200, f"Failed to get application sources: {sources_response.text}"
+    source_counts = sources_response.json()
+    assert isinstance(source_counts, dict), "Application sources response must be a dictionary/JSON object!"
+    print(f"    -> Retrieved source distribution: {source_counts}")
+    assert len(source_counts) > 0, "No application sources found!"
+    print("    -> Verified application sources statistics endpoint.")
+
     # Step 9: Delete/withdraw application (DELETE /applications/{application_id})
     print(f"[9] Withdrawing application_id={app_id}...")
     delete_response = client.delete(f"{BASE_URL}/applications/{app_id}")
@@ -137,6 +147,52 @@ def run_verification():
     withdrawn_app = next((a for a in final_apps if a["id"] == app_id), None)
     assert withdrawn_app is None, "Withdrawn application is still returned in user application feed!"
     print("    -> Application withdrawn. Deleted from candidate tracking records.")
+
+    # Step 10: Generate Matches (POST /matches/generate/{user_id})
+    print(f"[10] Generating matches for user_id={user_id}...")
+    generate_response = client.post(f"{BASE_URL}/matches/generate/{user_id}")
+    assert generate_response.status_code == 200, f"Failed to generate matches: {generate_response.text}"
+    matches_list = generate_response.json()
+    assert len(matches_list) > 0, "No matches generated!"
+    print(f"    -> Generated {len(matches_list)} matches.")
+    # Check that it's sorted by score descending
+    scores = [m["score"] for m in matches_list]
+    assert scores == sorted(scores, reverse=True), "Matches are not sorted by score descending!"
+    print(f"    -> Verified matches are sorted descending (Top score: {scores[0]:.2f}, Lowest score: {scores[-1]:.2f})")
+
+    target_match = matches_list[0]
+    match_id = target_match["id"]
+
+    # Step 11: Save Match (POST /matches/{match_id}/save)
+    print(f"[11] Saving match_id={match_id}...")
+    save_response = client.post(f"{BASE_URL}/matches/{match_id}/save")
+    assert save_response.status_code == 200, f"Failed to save match: {save_response.text}"
+    saved_match = save_response.json()
+    assert saved_match["saved"] is True, "Match was not marked as saved!"
+    print("    -> Match marked as saved.")
+
+    # Step 12: Mark Match as Seen (POST /matches/{match_id}/seen)
+    print(f"[12] Marking match_id={match_id} as seen...")
+    seen_response = client.post(f"{BASE_URL}/matches/{match_id}/seen")
+    assert seen_response.status_code == 200, f"Failed to mark match as seen: {seen_response.text}"
+    seen_match = seen_response.json()
+    assert seen_match["seen"] is True, "Match was not marked as seen!"
+    print("    -> Match marked as seen.")
+
+    # Step 13: Fetch Feed (GET /feed/{user_id})
+    print(f"[13] Fetching feed for user_id={user_id}...")
+    feed_response = client.get(f"{BASE_URL}/feed/{user_id}")
+    assert feed_response.status_code == 200, f"Failed to fetch feed: {feed_response.text}"
+    feed_list = feed_response.json()
+    assert len(feed_list) == len(matches_list), "Feed size does not match generated matches!"
+    refetched_match = next((m for m in feed_list if m["id"] == match_id), None)
+    assert refetched_match is not None, "Saved/seen match not in feed!"
+    assert refetched_match["saved"] is True, "Saved state not persisted in feed!"
+    assert refetched_match["seen"] is True, "Seen state not persisted in feed!"
+    # Check feed sorting
+    feed_scores = [m["score"] for m in feed_list]
+    assert feed_scores == sorted(feed_scores, reverse=True), "Feed is not sorted by score descending!"
+    print(f"    -> Verified feed matches are sorted descending and saved/seen states are persistent.")
 
     print("\n--- ATS Audit Verification Passed Successfully ---")
 

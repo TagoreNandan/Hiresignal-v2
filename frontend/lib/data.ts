@@ -4,7 +4,7 @@ import { Opportunity } from "@/types/opportunity";
 
 export const navLinks: NavLink[] = [
   { name: 'Dashboard', href: '/' },
-  { name: 'App Tracker', href: '/feed' },
+  { name: 'Opportunities', href: '/feed' },
   { name: 'Configure Profile', href: '/profile' },
 ];
 

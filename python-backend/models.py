@@ -20,6 +20,7 @@ class User(Base):
     location_pref = Column(String(100))
     
     applications = relationship("JobApplication", back_populates="user", cascade="all, delete-orphan")
+    matches = relationship("Match", back_populates="user", cascade="all, delete-orphan")
 
 
 class Opportunity(Base):
@@ -43,7 +44,10 @@ class Opportunity(Base):
         server_default=func.now()
     )
     
+    required_skills = Column(ARRAY(String), nullable=True)
+    
     applications = relationship("JobApplication", back_populates="opportunity", cascade="all, delete-orphan")
+    matches = relationship("Match", back_populates="opportunity", cascade="all, delete-orphan")
 
 
 class JobApplication(Base):
@@ -71,3 +75,27 @@ class JobApplication(Base):
     opportunity = relationship("Opportunity", back_populates="applications")
 
 
+class Match(Base):
+    __tablename__ = "matches"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False
+    )
+    opportunity_id = Column(
+        Integer,
+        ForeignKey("opportunities.id"),
+        nullable=False
+    )
+    score = Column(Float, nullable=False)
+    saved = Column(Boolean, nullable=False, default=False)
+    seen = Column(Boolean, nullable=False, default=False)
+    created_at = Column(
+        DateTime(timezone=True),
+        server_default=func.now()
+    )
+    
+    user = relationship("User", back_populates="matches")
+    opportunity = relationship("Opportunity", back_populates="matches")

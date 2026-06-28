@@ -37,6 +37,7 @@ class OpportunityResponse(BaseModel):
     scraped_at: datetime
     score: Optional[float] = 100.0
     status: Optional[str] = "ACTIVE"
+    required_skills: Optional[List[str]] = None
 
     model_config = {"from_attributes": True}
 
@@ -48,13 +49,18 @@ class OpportunityCreate(BaseModel):
     location: Optional[str] = None
     source: Optional[str] = None
     source_url: str
+    required_skills: Optional[List[str]] = None
 
 
 class JobApplicationCreate(BaseModel):
     user_id: int
-    opportunity_id: int
+    opportunity_id: Optional[int] = None
+    company: Optional[str] = None
+    title: Optional[str] = None
+    source: Optional[str] = None
     status: Optional[str] = "APPLIED"
     notes: Optional[str] = None
+    applied_at: Optional[datetime] = None
 
 
 class JobApplicationOpportunity(BaseModel):
@@ -64,6 +70,7 @@ class JobApplicationOpportunity(BaseModel):
     description: Optional[str] = None
     location: Optional[str] = None
     source: Optional[str] = None
+    required_skills: Optional[List[str]] = None
 
     model_config = {"from_attributes": True}
 
@@ -86,3 +93,31 @@ class JobApplicationStatusUpdate(BaseModel):
 
 class JobApplicationNotesUpdate(BaseModel):
     notes: str
+
+
+class MatchCreate(BaseModel):
+    user_id: int
+    opportunity_id: int
+    score: float
+    saved: Optional[bool] = False
+    seen: Optional[bool] = False
+
+
+class MatchResponse(BaseModel):
+    id: int
+    user_id: int
+    opportunity_id: int
+    score: float
+    saved: bool
+    seen: bool
+    created_at: datetime
+    opportunity: OpportunityResponse
+
+    model_config = {"from_attributes": True}
+
+
+class DashboardMetrics(BaseModel):
+    total_opportunities: int
+    total_users: int
+    average_score: Optional[float] = None
+    pipeline_value: float
